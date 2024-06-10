@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/consumptionDateChecker.test.iml" filepath="$PROJECT_DIR$/.idea/modules/consumptionDateChecker.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/otherLanguagesPriect.iml" filepath="$PROJECT_DIR$/.idea/otherLanguagesPriect.iml" />
     </modules>
   </component>
