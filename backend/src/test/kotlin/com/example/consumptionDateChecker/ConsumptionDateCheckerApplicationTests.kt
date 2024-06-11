@@ -112,4 +112,11 @@ class ConsumptionDateCheckerApplicationTests (
 
 	}
 
+	@Test
+	fun `GETリクエストはバーコードから商品情報を返す`() {
+		val response = restTemplate.getForEntity("http://localhost:$port/api/items/new/4514603356816", Array<Item>::class.java)
+		val items =response.body!!
+		assertThat(items[0].user_id , equalTo(1))
+	}
+
 }
