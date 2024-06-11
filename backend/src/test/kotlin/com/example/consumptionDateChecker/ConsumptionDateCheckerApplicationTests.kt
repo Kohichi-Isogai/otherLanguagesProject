@@ -9,6 +9,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.jdbc.Sql
+import java.time.LocalDate
+import java.util.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql("/insert_test_data.sql")
@@ -19,11 +21,23 @@ class ConsumptionDateCheckerApplicationTests (
 
 	@Test
 	fun `GETリクエストはOKステータスを返す`() {
-		// localhost/todos に GETリクエストを発行する。
 		val response = restTemplate.getForEntity("http://localhost:$port/api/items", String::class.java)
-		// レスポンスのステータスコードは OK である。
 		assertThat(response.statusCode, equalTo(HttpStatus.OK))
 	}
 
+	@Test
+	fun `GETリクエストはusersオブジェクトを返す`() {
+		val response = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val items =response.body!!
+		assertThat(items.size, equalTo(1))
+		assertThat(items[0].id , equalTo(1))
+		assertThat(items[0].item , equalTo("アサヒ飲料 おいしい水 天然水"))
+		assertThat(items[0].image_url , equalTo("https://item-shopping.c.yimg.jp/i/g/misono-support_b5-696"))
+		assertThat(items[0].quantity , equalTo(10))
+		val date = "2024-06-09"
+		val tmp =items[0].limit_date
+		assertThat(tmp.toString() , equalTo(date.toString()))
+		assertThat(items[0].user_id , equalTo(1))
+	}
 
 }

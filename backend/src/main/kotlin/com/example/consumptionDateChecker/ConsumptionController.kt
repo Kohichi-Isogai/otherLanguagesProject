@@ -1,15 +1,14 @@
 package com.example.consumptionDateChecker
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
 
 @RestController
-class ConsumptionController {
+class ConsumptionController(@Autowired val consumptionRepository: consumptionRepository) {
 
     @GetMapping("/api/items")
-    fun getItems(): String{
-        return "hello"
+    fun getItems(): Array<Item>{
+        return consumptionRepository.getItemsRepository()
     }
-
 
 }
