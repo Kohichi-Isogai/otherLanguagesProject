@@ -11,4 +11,9 @@ class ConsumptionController(@Autowired val consumptionRepository: consumptionRep
         return consumptionRepository.getItemsRepository()
     }
 
+    @PostMapping("/api/items")
+    fun postItem(@RequestBody itemRequest:ItemPostRequest){
+        consumptionRepository.postItemRepository(itemRequest)
+        return
+    }
 }

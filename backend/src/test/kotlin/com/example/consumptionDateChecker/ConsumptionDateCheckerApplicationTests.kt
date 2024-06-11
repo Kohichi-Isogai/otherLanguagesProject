@@ -40,4 +40,25 @@ class ConsumptionDateCheckerApplicationTests (
 		assertThat(items[0].user_id , equalTo(1))
 	}
 
+	@Test
+	fun `POSTリクエストはItemリクエストを格納する`() {
+		val request = ItemPostRequest(
+			"AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】",
+			"https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp",
+			27,
+			1)
+		val postResponse = restTemplate.postForEntity("http://localhost:$port/api/items", request,String::class.java)
+		assertThat(postResponse.statusCode, equalTo(HttpStatus.OK))
+
+		val getResponse = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val items = getResponse.body!!
+		assertThat(items.size, equalTo(2))
+		assertThat(items[1].item , equalTo("AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】"))
+		assertThat(items[1].image_url , equalTo("https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp"))
+		assertThat(items[1].quantity , equalTo(27))
+		val date = LocalDate.now()
+		val tmp =items[1].limit_date
+		assertThat(tmp.toString() , equalTo(date.toString()))
+		assertThat(items[1].user_id , equalTo(1))
+	}
 }

@@ -22,6 +22,13 @@ class consumptionRepository(@Autowired val jdbcTemplate: JdbcTemplate) {
         return response.toTypedArray()
     }
 
-
-}
-
+    fun postItemRepository(itemRequest: ItemPostRequest) {
+        jdbcTemplate.update(
+            "INSERT INTO items (item,image_url,quantity,limit_date,user_id) VALUES (?,?,?,?,?)",
+            itemRequest.item,
+            itemRequest.image_url,
+            itemRequest.quantity,
+            LocalDate.now(),
+            itemRequest.user_id
+        )
+    }
