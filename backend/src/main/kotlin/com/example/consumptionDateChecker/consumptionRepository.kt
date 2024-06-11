@@ -43,3 +43,13 @@ class consumptionRepository(@Autowired val jdbcTemplate: JdbcTemplate) {
         )
 
     }
+
+    fun deleteItemRepository(itemRequest: ItemDeleteRequest) {
+        jdbcTemplate.update(
+            "DELETE FROM items WHERE id = ?",
+            itemRequest.id
+        )
+
+    }
+
+}

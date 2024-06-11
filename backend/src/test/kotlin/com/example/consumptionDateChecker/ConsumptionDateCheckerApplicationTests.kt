@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql
 import java.time.LocalDate
 import java.util.*
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql("/insert_test_data.sql")
 class ConsumptionDateCheckerApplicationTests (
@@ -87,5 +88,28 @@ class ConsumptionDateCheckerApplicationTests (
 		assertThat(afterItems[0].user_id , equalTo(beforeItems[0].user_id))
 	}
 
+
+	@Test
+	fun `DELETEリクエストでItemを消す`() {
+		val putRequest = ItemPostRequest(
+			"AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】",
+			"https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp",
+			27,
+			1)
+		restTemplate.postForEntity("http://localhost:$port/api/items", putRequest,String::class.java)
+
+		val getBeforeResponse = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val beforeItems = getBeforeResponse.body!!
+		assertThat(beforeItems.size, equalTo(2))
+
+		val deleteRequest = beforeItems[1].id
+		restTemplate.delete("http://localhost:$port/api/items/$deleteRequest")
+
+		val getAfterResponse = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val afterItems = getAfterResponse.body!!
+		assertThat(afterItems.size, equalTo(1))
+		assertThat(afterItems[0].id , equalTo(1))
+
+	}
 
 }

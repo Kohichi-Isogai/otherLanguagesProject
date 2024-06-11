@@ -22,4 +22,12 @@ class ConsumptionController(@Autowired val consumptionRepository: consumptionRep
         consumptionRepository.putItemRepository(itemRequest)
         return
     }
+
+    @DeleteMapping("/api/items/{id}")
+    fun deleteItem(@PathVariable("id") id:Long){
+        val itemRequest = ItemDeleteRequest(id)
+        consumptionRepository.deleteItemRepository(itemRequest)
+        return
+    }
+
 }
