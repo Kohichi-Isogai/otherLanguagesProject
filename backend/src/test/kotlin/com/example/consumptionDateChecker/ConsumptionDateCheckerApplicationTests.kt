@@ -61,4 +61,31 @@ class ConsumptionDateCheckerApplicationTests (
 		assertThat(tmp.toString() , equalTo(date.toString()))
 		assertThat(items[1].user_id , equalTo(1))
 	}
+
+	@Test
+	fun `PutリクエストでItemを修正する`() {
+		val beforeGetResponse = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val beforeItems = beforeGetResponse.body!!
+
+		val request = ItemPutRequest(
+			beforeItems[0].id,
+			beforeItems[0].item,
+			beforeItems[0].image_url,
+			5,
+			beforeItems[0].limit_date,
+			beforeItems[0].user_id)
+
+		restTemplate.put("http://localhost:$port/api/items",request,String::class.java)
+
+		val afterGetResponse = restTemplate.getForEntity("http://localhost:$port/api/items", Array<Item>::class.java)
+		val afterItems = afterGetResponse.body!!
+		assertThat(afterItems[0].id , equalTo(beforeItems[0].id))
+		assertThat(afterItems[0].item , equalTo(beforeItems[0].item))
+		assertThat(afterItems[0].image_url , equalTo(beforeItems[0].image_url))
+		assertThat(afterItems[0].quantity , equalTo(5))
+		assertThat(afterItems[0].limit_date , equalTo(beforeItems[0].limit_date))
+		assertThat(afterItems[0].user_id , equalTo(beforeItems[0].user_id))
+	}
+
+
 }

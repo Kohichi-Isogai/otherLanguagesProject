@@ -16,4 +16,10 @@ class ConsumptionController(@Autowired val consumptionRepository: consumptionRep
         consumptionRepository.postItemRepository(itemRequest)
         return
     }
+
+    @PutMapping("/api/items")
+    fun putItem(@RequestBody itemRequest:ItemPutRequest){
+        consumptionRepository.putItemRepository(itemRequest)
+        return
+    }
 }

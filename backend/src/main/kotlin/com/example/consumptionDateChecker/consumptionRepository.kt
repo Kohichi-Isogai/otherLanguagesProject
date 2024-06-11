@@ -32,3 +32,14 @@ class consumptionRepository(@Autowired val jdbcTemplate: JdbcTemplate) {
             itemRequest.user_id
         )
     }
+    fun putItemRepository(itemRequest: ItemPutRequest) {
+        jdbcTemplate.update(
+            "UPDATE items SET item = ?, image_url = ?, quantity = ?, limit_date = ? WHERE id = ?",
+            itemRequest.item,
+            itemRequest.image_url,
+            itemRequest.quantity,
+            itemRequest.limit_date,
+            itemRequest.id
+        )
+
+    }
