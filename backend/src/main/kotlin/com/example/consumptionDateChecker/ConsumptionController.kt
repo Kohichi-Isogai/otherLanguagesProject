@@ -5,14 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 
+@CrossOrigin(origins = ["http://localhost:8080/"], maxAge = 3600)
 @RestController
 class ConsumptionController(
     @Autowired val consumptionRepository: consumptionRepository,
 ) {
+    @Value("\${app.id}")
+    lateinit var appId: String
 
     val restTemplate: RestTemplate = RestTemplate()
 
@@ -43,7 +47,7 @@ class ConsumptionController(
     fun getNewItem(@PathVariable("barCode") barCode:Long ): YahooItem{
         println(barCode);
 
-        val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=dj00aiZpPUFydjhKTHpRaHB0aCZzPWNvbnN1bWVyc2VjcmV0Jng9ZjU-&jan_code=4514603356816"
+        val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=$appId&jan_code=4514603356816"
         val res: ResponseEntity<String> = restTemplate.getForEntity<String>(url, String::class.java)
         val json= res.body!!
         val name = json.split(""""name":"""")[1].split("""","description"""")[0];
