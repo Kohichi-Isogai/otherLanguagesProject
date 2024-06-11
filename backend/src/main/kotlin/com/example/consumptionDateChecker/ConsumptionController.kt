@@ -1,16 +1,17 @@
 package com.example.consumptionDateChecker
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 
-
-
 @RestController
 class ConsumptionController(
-    @Autowired val consumptionRepository: consumptionRepository
+    @Autowired val consumptionRepository: consumptionRepository,
 ) {
 
     val restTemplate: RestTemplate = RestTemplate()
@@ -39,16 +40,19 @@ class ConsumptionController(
         return
     }
     @GetMapping("/api/items/new/{barCode}")
-    fun getNewItem(@PathVariable("barCode") barCode:Long ,@Autowired yahooItem: YahooItem): Array<Item>{
+    fun getNewItem(@PathVariable("barCode") barCode:Long ): YahooItem{
         println(barCode);
 
         val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=dj00aiZpPUFydjhKTHpRaHB0aCZzPWNvbnN1bWVyc2VjcmV0Jng9ZjU-&jan_code=4514603356816"
         val res: ResponseEntity<String> = restTemplate.getForEntity<String>(url, String::class.java)
-        val json = res.body
+        val json= res.body!!
+        val name = json.split(""""name":"""")[1].split("""","description"""")[0];
+        val image = json.split(""""medium":"""")[1].split(""""},""")[0]
 
-        println(json)
-
-        return consumptionRepository.getItemsRepository()
+        return YahooItem(
+            name,
+            image
+        )
     }
 
 }

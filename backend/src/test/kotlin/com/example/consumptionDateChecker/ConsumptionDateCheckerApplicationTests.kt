@@ -114,9 +114,11 @@ class ConsumptionDateCheckerApplicationTests (
 
 	@Test
 	fun `GETリクエストはバーコードから商品情報を返す`() {
-		val response = restTemplate.getForEntity("http://localhost:$port/api/items/new/4514603356816", Array<Item>::class.java)
-		val items =response.body!!
-		assertThat(items[0].user_id , equalTo(1))
+		val response = restTemplate.getForEntity("http://localhost:$port/api/items/new/4514603356816", YahooItem::class.java)
+		val item:YahooItem =response.body!!
+
+		assertThat(item.name , equalTo("アサヒ飲料 おいしい水 天然水【自動販売機用】 600mlペットボトル×24本入"))
+		assertThat(item.image , equalTo("https://item-shopping.c.yimg.jp/i/g/misono-support_b5-696"))
 	}
 
 }
