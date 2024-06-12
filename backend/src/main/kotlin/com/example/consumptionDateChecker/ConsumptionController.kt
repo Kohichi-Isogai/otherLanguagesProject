@@ -41,27 +41,22 @@ class ConsumptionController(
         return
     }
     @GetMapping("/api/items/new/{barCode}")
-    fun getNewItem(@PathVariable("barCode") barCode:Long ): YahooItem{
+    fun getNewItem(@PathVariable("barCode") barCode:Long ): ReturnYahooItem{
 
         val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=$appId&jan_code=$barCode"
         val res: ResponseEntity<String> = restTemplate.getForEntity<String>(url, String::class.java)
         val jsonData= res.body!!
-//        val json = Json {
-//            ignoreUnknownKeys = true
-//        }
-//
-//        val test = json.decodeFromString<YahooItem>(jsonData)
-//        println(test.image)
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
+        val result = json.decodeFromString<YahooItem>(jsonData)
+        println(result.hits[0].name)
 
-
-
-        val name = jsonData.split(""""name":"""")[1].split("""","description"""")[0];
-        val image = jsonData.split(""""medium":"""")[1].split(""""},""")[0]
-
-        return YahooItem(
-            name,
-            image
+        return ReturnYahooItem(
+            result.hits[0].name,
+            result.hits[0].image.medium
         )
+
     }
 
 }
