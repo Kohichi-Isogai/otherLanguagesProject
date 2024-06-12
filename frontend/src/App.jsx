@@ -6,6 +6,7 @@ import { MantineProvider } from "@mantine/core";
 import { HomePage } from "./page/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ItemListPage } from "./page/ItmeListPage";
+import { CreatePage } from "./page/CreatePage";
 
 function App() {
   const itemsInit = async (url) => {
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route path="home" element={<HomePage />}></Route>
+            <Route path="create" element={<CreatePage />}></Route>
             <Route path="items" element={<ItemListPage data={data} />}></Route>
           </Route>
         </Routes>
