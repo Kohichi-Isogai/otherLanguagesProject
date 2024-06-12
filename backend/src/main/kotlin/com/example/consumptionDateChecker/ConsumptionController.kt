@@ -1,9 +1,6 @@
 package com.example.consumptionDateChecker
 
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
@@ -45,13 +42,21 @@ class ConsumptionController(
     }
     @GetMapping("/api/items/new/{barCode}")
     fun getNewItem(@PathVariable("barCode") barCode:Long ): YahooItem{
-        println(barCode);
 
-        val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=$appId&jan_code=4514603356816"
+        val url = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=$appId&jan_code=$barCode"
         val res: ResponseEntity<String> = restTemplate.getForEntity<String>(url, String::class.java)
-        val json= res.body!!
-        val name = json.split(""""name":"""")[1].split("""","description"""")[0];
-        val image = json.split(""""medium":"""")[1].split(""""},""")[0]
+        val jsonData= res.body!!
+//        val json = Json {
+//            ignoreUnknownKeys = true
+//        }
+//
+//        val test = json.decodeFromString<YahooItem>(jsonData)
+//        println(test.image)
+
+
+
+        val name = jsonData.split(""""name":"""")[1].split("""","description"""")[0];
+        val image = jsonData.split(""""medium":"""")[1].split(""""},""")[0]
 
         return YahooItem(
             name,
