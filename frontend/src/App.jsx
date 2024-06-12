@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from "axios";
+import "./App.css";
+import "@mantine/core/styles.css";
+import useSWR from "swr";
+import { MantineProvider } from "@mantine/core";
+import { HomePage } from "./page/HomePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ItemListPage } from "./page/ItmeListPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const itemsInit = async (url) => {
+    const response = await axios.get(url);
+    return response.data;
+  };
+
+  const { data, error, isLoading } = useSWR("/api/items", itemsInit);
+
+  if (isLoading) return <div>loading...</div>;
+
+  if (error) return <div>サーバーエラー</div>;
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <MantineProvider>
+        <Routes>
+          <Route path="/">
+            <Route path="home" element={<HomePage />}></Route>
+            <Route path="items" element={<ItemListPage data={data} />}></Route>
+          </Route>
+        </Routes>
+      </MantineProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
+{
+  /* <button
+onClick={async () => {
+  // const response = await axios.get("/api/items");
+  console.log(data[0]);
+}}
+>
+test
+</button> */
+}
