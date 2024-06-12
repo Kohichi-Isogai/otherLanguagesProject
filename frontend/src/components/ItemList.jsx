@@ -1,34 +1,56 @@
 import { Group, Stack } from "@mantine/core";
+import { BackButton } from "./BackButton";
+// import { useNavigate } from "react-router-dom";
 
 export const ItemList = (props) => {
   const { data } = props;
+  //   const navigate = useNavigate();
+
   console.log(data);
   return (
-    <Stack>
-      {data.map((data, index) => {
-        return (
-          <div key={index} style={{ border: " 2px solid #000" }}>
-            <Group>
-              <img src={data.image_url} />
-              <Stack align="flex-start">
-                <div
-                  style={{
-                    overflowX: "scroll",
-                    // "word-break": "keep-all",
-                    whiteSpace: "nowrap",
-                    width: "200px",
-                    paddingRight: "10px",
-                  }}
-                >
-                  品名：{data.item}
-                </div>
-                <div>期限：{data.limit_date}</div>
-                <div>残り：{data.quantity}</div>
-              </Stack>
-            </Group>
-          </div>
-        );
-      })}
-    </Stack>
+    <>
+      <Stack justify="center">
+        {data.map((data, index) => {
+          return (
+            <div
+              key={index}
+              style={{ border: " 2px solid #000" }}
+              onClick={() => {
+                // navigate("/items/:id/edit-delete")
+              }}
+            >
+              <Group>
+                <img src={data.image_url} style={{ width: "30%" }} />
+                <Stack align="flex-start" style={{ width: "60%" }}>
+                  <div
+                    style={{
+                      overflowX: "scroll",
+                      // "word-break": "keep-all",
+                      whiteSpace: "nowrap",
+                      width: "90%",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    品名：{data.item}
+                  </div>
+                  <div>期限：{data.limit_date}</div>
+                  <div>数量：{data.quantity}</div>
+                </Stack>
+              </Group>
+            </div>
+          );
+        })}
+      </Stack>
+
+      <div
+        style={{
+          position: "fixed",
+          bottom: "5%",
+          width: "90%",
+        }}
+      >
+        <BackButton url={"/home"} comment={"戻る"}></BackButton>
+      </div>
+    </>
   );
 };
