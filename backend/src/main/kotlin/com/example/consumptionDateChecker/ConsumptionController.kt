@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 
-@CrossOrigin(origins = ["http://localhost:8080/"], maxAge = 3600)
+//@CrossOrigin(origins = ["http://localhost:8080/"], maxAge = 3600)
 @RestController
 class ConsumptionController(
     @Autowired val consumptionRepository: consumptionRepository,
