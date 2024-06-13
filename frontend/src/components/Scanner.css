@@ -1,0 +1,14 @@
+#interactive {
+  position: relative;
+  width: "350px";
+}
+
+video {
+  width: 350px;
+}
+
+.drawingBuffer {
+  position: absolute;
+  top: 0px;
+  width: 350px;
+}
