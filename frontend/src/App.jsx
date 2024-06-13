@@ -7,6 +7,8 @@ import { HomePage } from "./page/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ItemListPage } from "./page/ItmeListPage";
 import { CreatePage } from "./page/CreatePage";
+import { EditDeletePage } from "./page/EditDeletePage";
+import { BarCodePage } from "./page/BarCodePage";
 
 function App() {
   const itemsInit = async (url) => {
@@ -26,8 +28,10 @@ function App() {
         <Routes>
           <Route path="/">
             <Route path="home" element={<HomePage />}></Route>
-            <Route path="create" element={<CreatePage />}></Route>
+            <Route path="create/:barCode" element={<CreatePage />}></Route>
             <Route path="items" element={<ItemListPage data={data} />}></Route>
+            <Route path="/items/:id" element={<EditDeletePage />}></Route>
+            <Route path="BarCode" element={<BarCodePage />}></Route>
           </Route>
         </Routes>
       </MantineProvider>

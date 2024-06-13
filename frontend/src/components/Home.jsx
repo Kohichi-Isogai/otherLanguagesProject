@@ -11,7 +11,7 @@ export const Home = () => {
         gap="xs"
         style={{ border: " 2px solid #000", width: "60%", height: "20vh" }}
         onClick={() => {
-          navigate("/create");
+          navigate("/BarCode");
         }}
       >
         <div style={{ fontSize: "200%", fontWeight: "bold" }}>+</div>
