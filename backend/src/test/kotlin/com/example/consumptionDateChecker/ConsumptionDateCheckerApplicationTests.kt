@@ -35,7 +35,10 @@ class ConsumptionDateCheckerApplicationTests (
 		assertThat(items[0].item , equalTo("アサヒ飲料 おいしい水 天然水"))
 		assertThat(items[0].image_url , equalTo("https://item-shopping.c.yimg.jp/i/g/misono-support_b5-696"))
 		assertThat(items[0].quantity , equalTo(10))
-		val date = "2024-06-09"
+		val date = "2024-07-09"
+		val tmp =items[0].limit_date
+		assertThat(tmp.toString() , equalTo(date.toString()))
+		assertThat(items[0].user_id , equalTo(1))
 		val tmp =items[0].limit_date
 		assertThat(tmp.toString() , equalTo(date.toString()))
 		assertThat(items[0].user_id , equalTo(1))
@@ -47,6 +50,7 @@ class ConsumptionDateCheckerApplicationTests (
 			"AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】",
 			"https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp",
 			27,
+			LocalDate.parse("2024-06-24"),
 			1)
 		val postResponse = restTemplate.postForEntity("http://localhost:$port/api/items", request,String::class.java)
 		assertThat(postResponse.statusCode, equalTo(HttpStatus.OK))
@@ -57,8 +61,8 @@ class ConsumptionDateCheckerApplicationTests (
 		assertThat(items[1].item , equalTo("AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】"))
 		assertThat(items[1].image_url , equalTo("https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp"))
 		assertThat(items[1].quantity , equalTo(27))
-		val date = LocalDate.now()
-		val tmp =items[1].limit_date
+		val date = LocalDate.parse("2024-06-24")
+		val tmp =LocalDate.parse(items[1].limit_date.toString())
 		assertThat(tmp.toString() , equalTo(date.toString()))
 		assertThat(items[1].user_id , equalTo(1))
 	}
@@ -73,7 +77,7 @@ class ConsumptionDateCheckerApplicationTests (
 			beforeItems[0].item,
 			beforeItems[0].image_url,
 			5,
-			beforeItems[0].limit_date,
+			LocalDate.parse(beforeItems[0].limit_date.toString()),
 			beforeItems[0].user_id)
 
 		restTemplate.put("http://localhost:$port/api/items",request,String::class.java)
@@ -95,6 +99,7 @@ class ConsumptionDateCheckerApplicationTests (
 			"AGF(エージーエフ) ブレンディ スティック カフェオレ 【 スティックコーヒー 】",
 			"https://item-shopping.c.yimg.jp/i/g/nostal-dou_2022yr12mt18daywq069ic0b9vsjczp",
 			27,
+			LocalDate.parse("2024-06-24"),
 			1)
 		restTemplate.postForEntity("http://localhost:$port/api/items", putRequest,String::class.java)
 
