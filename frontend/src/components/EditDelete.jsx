@@ -133,7 +133,7 @@ export const EditDelete = (props) => {
                 width: "30%",
               }}
             >
-              登録
+              更新
             </Button>
           </Group>
         </div>
