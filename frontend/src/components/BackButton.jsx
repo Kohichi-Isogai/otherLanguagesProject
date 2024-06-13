@@ -4,20 +4,19 @@ import { useNavigate } from "react-router-dom";
 export const BackButton = (props) => {
   const navigate = useNavigate();
 
-  const { url, comment } = props;
+  const { url, comment, size = 100 } = props;
   return (
-    <>
+    <div>
       <Button
         style={{
-          width: "30%",
+          width: `${size}%`,
         }}
         onClick={() => {
-          console.log(url);
           navigate(url);
         }}
       >
         {comment}
       </Button>
-    </>
+    </div>
   );
 };
