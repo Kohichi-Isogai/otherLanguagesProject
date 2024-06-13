@@ -3,14 +3,11 @@ import { BackButton } from "./BackButton";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
 import selectData from "../config/selectData.json";
 import { useNavigate } from "react-router-dom";
 
 export const Create = (props) => {
   const { barCode } = props;
-  const [item, setItem] = useState("");
-  const [isItem, setIsItem] = useState(false);
   const navigate = useNavigate();
 
   const itemsInit = async (url) => {
@@ -45,10 +42,6 @@ export const Create = (props) => {
         </div>
       </>
     );
-  }
-  if (!isItem) {
-    setIsItem(true);
-    setItem(data.name);
   }
   const itemPost = async (values) => {
     const day = `${values.year}-${values.month
