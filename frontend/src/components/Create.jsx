@@ -74,20 +74,11 @@ export const Create = (props) => {
     navigate("/items");
   };
 
-  //   itemPost({ quantity: 5 });
-
-  //   const deleteItem = async () => {
-  //     await axios.delete("/api/items/30");
-  //   };
-
-  //   deleteItem();
-
-  //   const getItem = async () => {
-  //     const tmp = await axios.get("/api/items");
-  //     console.log(tmp);
-  //   };
-
-  //   getItem();
+  if (data && !form.isDirty()) {
+    form.setValues({
+      name: data.name,
+    });
+  }
 
   return (
     <>
