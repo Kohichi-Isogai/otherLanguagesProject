@@ -40,14 +40,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <button
-onClick={async () => {
-  // const response = await axios.get("/api/items");
-  console.log(data[0]);
-}}
->
-test
-</button> */
-}

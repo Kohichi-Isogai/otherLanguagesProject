@@ -6,7 +6,6 @@ export const ItemList = (props) => {
   const { data } = props;
   const navigate = useNavigate();
 
-  console.log(data);
   return (
     <>
       <Stack justify="center">
@@ -25,7 +24,6 @@ export const ItemList = (props) => {
                   <div
                     style={{
                       overflowX: "scroll",
-                      // "word-break": "keep-all",
                       whiteSpace: "nowrap",
                       width: "90%",
                       paddingRight: "10px",

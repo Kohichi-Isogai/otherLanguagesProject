@@ -52,7 +52,6 @@ export const EditDelete = (props) => {
     mutate(itemsInit);
     navigate("/items");
   };
-  console.log(Number(data[0].limit_date.split("-")[1]));
 
   if (data && !form.isDirty()) {
     form.setValues({
@@ -87,12 +86,6 @@ export const EditDelete = (props) => {
       />
       <form onSubmit={form.onSubmit(itemPut)}>
         <TextInput
-          //   value={data[0].item}
-          //! 文字が変わらないバグ修正
-          //   onChange={() => {
-          //     const text = document.getElementById("input").value;
-          //     setIsItem(text);
-          //   }}
           label="商品名"
           placeholder="商品名を入力"
           {...form.getInputProps("name")}
@@ -100,13 +93,11 @@ export const EditDelete = (props) => {
         <text style={{ fontSize: "14px" }}>消費期限</text>
         <Group gap="xs">
           <TextInput
-            // value={data[0].limit_date.split("-")[0]}
             style={{ width: "40%" }}
             placeholder="年"
             {...form.getInputProps("year")}
           />
           <Select
-            // value={String(Number(data[0].limit_date.split("-")[1]))}
             style={{ width: "20%" }}
             placeholder="月"
             data={selectData.month}
@@ -114,7 +105,6 @@ export const EditDelete = (props) => {
           ></Select>
 
           <Select
-            // value={String(Number(data[0].limit_date.split("-")[2]))}
             style={{ width: "20%" }}
             placeholder="日"
             data={selectData.day}
@@ -122,7 +112,6 @@ export const EditDelete = (props) => {
           ></Select>
         </Group>
         <TextInput
-          //   value={data[0].quantity}
           style={{ width: "40%" }}
           label="数量"
           placeholder="数量"

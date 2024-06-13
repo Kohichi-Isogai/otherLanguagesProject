@@ -20,13 +20,7 @@ export const Create = (props) => {
 
   const form = useForm({
     mode: "uncontrolled",
-    // initialValues: {
     name: "",
-    //   year: "",
-    //   month: "",
-    //   day: "",
-    //   quantity: "",
-    // },
   });
   const { data, error, isLoading } = useSWR(
     `/api/items/new/${barCode}`,
@@ -61,7 +55,6 @@ export const Create = (props) => {
       .toString()
       .padStart(2, "0")}-${values.day.toString().padStart(2, "0")}`;
     const request = {
-      //! 正しく読み込めたら修正
       item: data.name,
       image_url: data.image,
       quantity: values.quantity,
@@ -84,14 +77,8 @@ export const Create = (props) => {
     <>
       <img src={data.image} style={{ maxWidth: "200px", maxHeight: "200px" }} />
       <form onSubmit={form.onSubmit(itemPost)}>
-        {/* <form onSubmit={form.onSubmit((values) => console.log(values))}> */}
         <TextInput
-          value={item}
-          //! 文字が変わらないバグ修正
-          //   onChange={() => {
-          //     const text = document.getElementById("input").value;
-          //     setIsItem(text);
-          //   }}
+          // value={item}
           label="商品名"
           placeholder="商品名を入力"
           {...form.getInputProps("name")}
