@@ -1,10 +1,10 @@
 import { Group, Stack } from "@mantine/core";
 import { BackButton } from "./BackButton";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ItemList = (props) => {
   const { data } = props;
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   console.log(data);
   return (
@@ -16,7 +16,7 @@ export const ItemList = (props) => {
               key={index}
               style={{ border: " 2px solid #000" }}
               onClick={() => {
-                // navigate("/items/:id/edit-delete")
+                navigate(`/items/${data.id}`);
               }}
             >
               <Group>
@@ -29,6 +29,7 @@ export const ItemList = (props) => {
                       whiteSpace: "nowrap",
                       width: "90%",
                       paddingRight: "10px",
+                      textAlign: "left",
                     }}
                   >
                     品名：{data.item}
@@ -47,9 +48,10 @@ export const ItemList = (props) => {
           position: "fixed",
           bottom: "5%",
           width: "90%",
+          textAlign: "center",
         }}
       >
-        <BackButton url={"/home"} comment={"戻る"}></BackButton>
+        <BackButton url={"/home"} comment={"戻る"} size={30}></BackButton>
       </div>
     </>
   );
