@@ -41,14 +41,13 @@ export const EditDelete = (props) => {
       .toString()
       .padStart(2, "0")}-${values.day.toString().padStart(2, "0")}`;
     const request = {
-      //! 正しく読み込めたら修正
-      item: data.name,
-      image_url: data.image,
+      item: values.name,
+      image_url: data[0].image_url,
       quantity: values.quantity,
       limit_date: day,
-      user_id: 1,
+      id: id,
     };
-    await axios.post("/api/items", request);
+    await axios.put("/api/items", request);
 
     mutate(itemsInit);
     navigate("/items");
@@ -86,13 +85,7 @@ export const EditDelete = (props) => {
         src={data[0].image_url}
         style={{ maxWidth: "200px", maxHeight: "200px" }}
       />
-      {/* <form onSubmit={form.onSubmit(itemPut)}> */}
-      <form
-        onSubmit={form.onSubmit((values) => {
-          console.log(values);
-        })}
-      >
-        {/* <form onSubmit={form.onSubmit((values) => console.log(values))}> */}
+      <form onSubmit={form.onSubmit(itemPut)}>
         <TextInput
           //   value={data[0].item}
           //! 文字が変わらないバグ修正
