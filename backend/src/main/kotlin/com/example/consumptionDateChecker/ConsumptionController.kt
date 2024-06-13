@@ -22,6 +22,12 @@ class ConsumptionController(
         return consumptionRepository.getItemsRepository()
     }
 
+    @GetMapping("/api/items/{id}")
+    fun getItemId(@PathVariable("id") id:Long): Array<Item>{
+        val itemRequest = ItemGetIdRequest(id)
+        return consumptionRepository.getItemIdRepository(itemRequest)
+    }
+
     @PostMapping("/api/items")
     fun postItem(@RequestBody itemRequest:ItemPostRequest){
         consumptionRepository.postItemRepository(itemRequest)

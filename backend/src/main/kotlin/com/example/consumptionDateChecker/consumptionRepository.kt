@@ -22,13 +22,23 @@ class consumptionRepository(@Autowired val jdbcTemplate: JdbcTemplate) {
         return response.toTypedArray()
     }
 
+
+    fun getItemIdRepository(itemRequest: ItemGetIdRequest): Array<Item>{
+
+        val itemRowMapper = ItemRowMapper()
+        val response = jdbcTemplate.query("SELECT * FROM items WHERE id = ${itemRequest.id}", itemRowMapper)
+        return response.toTypedArray()
+    }
+
+
+
     fun postItemRepository(itemRequest: ItemPostRequest) {
         jdbcTemplate.update(
             "INSERT INTO items (item,image_url,quantity,limit_date,user_id) VALUES (?,?,?,?,?)",
             itemRequest.item,
             itemRequest.image_url,
             itemRequest.quantity,
-            LocalDate.now(),
+            itemRequest.limit_date,
             itemRequest.user_id
         )
     }

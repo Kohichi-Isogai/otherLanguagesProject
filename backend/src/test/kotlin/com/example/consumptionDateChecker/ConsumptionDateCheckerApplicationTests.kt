@@ -39,6 +39,19 @@ class ConsumptionDateCheckerApplicationTests (
 		val tmp =items[0].limit_date
 		assertThat(tmp.toString() , equalTo(date.toString()))
 		assertThat(items[0].user_id , equalTo(1))
+	}
+
+
+	@Test
+	fun `GETリクエストはusersオブジェクトを1つ返す`() {
+		val response = restTemplate.getForEntity("http://localhost:$port/api/items/1", Array<Item>::class.java)
+		val items =response.body!!
+		assertThat(items.size, equalTo(1))
+		assertThat(items[0].id , equalTo(1))
+		assertThat(items[0].item , equalTo("アサヒ飲料 おいしい水 天然水"))
+		assertThat(items[0].image_url , equalTo("https://item-shopping.c.yimg.jp/i/g/misono-support_b5-696"))
+		assertThat(items[0].quantity , equalTo(10))
+		val date = "2024-07-09"
 		val tmp =items[0].limit_date
 		assertThat(tmp.toString() , equalTo(date.toString()))
 		assertThat(items[0].user_id , equalTo(1))
