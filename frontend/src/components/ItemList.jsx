@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 export const ItemList = (props) => {
   const { data } = props;
   const navigate = useNavigate();
-
   return (
     <>
       <Stack justify="center">
@@ -18,6 +17,9 @@ export const ItemList = (props) => {
             }
           })
           .map((data, index) => {
+            const timeMM =
+              (new Date(data.limit_date).getTime() - new Date().getTime()) /
+              (60 * 60 * 1000);
             return (
               <div
                 key={index}
@@ -40,7 +42,17 @@ export const ItemList = (props) => {
                     >
                       品名：{data.item}
                     </div>
-                    <div>期限：{data.limit_date}</div>
+                    {timeMM > 24 ? (
+                      <div>期限：{data.limit_date}</div>
+                    ) : timeMM < 0 ? (
+                      <div style={{ color: "red" }}>
+                        期限：{data.limit_date}
+                      </div>
+                    ) : (
+                      <div style={{ color: "orange" }}>
+                        期限：{data.limit_date}
+                      </div>
+                    )}
                     <div>数量：{data.quantity}</div>
                   </Stack>
                 </Group>
