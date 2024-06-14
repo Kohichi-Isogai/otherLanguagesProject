@@ -33,7 +33,6 @@ export const Home = () => {
         </div>
         <div>一覧</div>
       </Stack>
-      <div>ピックアップ</div>
     </Stack>
   );
 };
